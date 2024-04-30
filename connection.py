@@ -3,7 +3,7 @@ import mysql
 from mysql.connector import connect, Error
 #from sqlite3 import connect
 
-from fullcode import create_table, insert_data_from_csv
+from complete_code import create_table, insert_data_from_csv
 
 cursor = None
 connection = None
@@ -33,7 +33,7 @@ def main():
     database = "new"
 
     # Connect to MySQL database
-    connection = connect_to_mysql(host, user, password, database)
+    connection = mysql_connect(host, user, password, database)
     if connection:
         create_table(connection)
        # insert_data_from_csv(connection, '/home/nineleaps/Downloads/all.csv')
