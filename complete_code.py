@@ -298,8 +298,132 @@ def validate_manager_input(manager):
         return True
 
 
-git push --set-upstream origin new_branch
-    
+
+def add_new_employee(connection):
+    if connection is None:
+        print("No connection to MySQL database.")
+        return
+
+    try:
+        cursor = connection.cursor()
+        # Get employee details from user input
+        name = input("Enter name: ")
+        if not name:
+            print("Name cannot be empty.")
+            return
+        elif not validate_name_input(name):
+            return
+
+        age = input("Enter age: ")
+        if not age:
+            print("Age cannot be empty.")
+            return
+        elif not validate_age_input(age):
+            return
+
+        address = input("Enter address: ")
+        if not address:
+            print("Address cannot be empty.")
+            return
+        elif not validate_address_input(address):
+            return
+
+        mobile_number = input("Enter mobile number: ")
+        if not mobile_number:
+            print("Mobile number cannot be empty.")
+            return
+        elif not validate_mobile_number_input(mobile_number):
+            return
+
+        gender = input("Enter gender: ")
+        if not gender:
+            print("Gender cannot be empty.")
+            return
+        elif not validate_gender_input(gender):
+            return
+
+        education_details = input("Enter education details: ")
+        if not education_details:
+            print("Education details cannot be empty.")
+            return
+        elif not validate_education_input(education_details):
+            return
+
+        salary = input("Enter salary: ")
+        if not salary:
+            print("Salary cannot be empty.")
+            return
+        elif not validate_salary_input(salary):
+            return
+
+        doj = input("Enter date of joining (YYYY-MM-DD): ")
+        if not doj:
+            print("Date of joining cannot be empty.")
+            return
+        elif not validate_joining_date_input(doj):
+            return
+
+        department = input("Enter department: ")
+        if not department:
+            print("Department cannot be empty.")
+            return
+        elif not validate_department_input(department):
+            return
+
+        position = input("Enter position: ")
+        if not position:
+            print("Position cannot be empty.")
+            return
+        elif not validate_position_input(position):
+            return
+
+        project_name = input("Enter project name: ")
+        if not project_name:
+            print("Project name cannot be empty.")
+            return
+        elif not validate_project_name_input(project_name):
+            return
+
+        tech_stack = input("Enter tech stack: ")
+        if not tech_stack:
+            print("Tech stack cannot be empty.")
+            return
+        elif not validate_tech_stack_input(tech_stack):
+            return
+
+        annual_salary = input("Enter annual salary: ")
+        if not annual_salary:
+            print("Annual salary cannot be empty.")
+            return
+        elif not validate_annual_salary_input(annual_salary):
+            return
+
+        manager = input("Enter Manager name: ")
+        if not manager:
+            print("Manager name cannot be empty.")
+            return
+        elif not validate_manager_input(manager):
+            return
+
+        # Insert new employee data into MySQL table
+        cursor.execute("""
+            INSERT INTO emss1 (Name, Age, Address, Mobile_Number, Gender, Education_Details, Salary, DOJ, Department, Position, Project_Name, Tech_Stack, Annual_Salary,manager)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)
+        """, (
+            name, age, address, mobile_number, gender, education_details, salary, doj, department, position,
+            project_name, tech_stack, annual_salary, manager))
+
+        connection.commit()
+        print("New employee added successfully")
+
+    except Error as e:
+        print(f"Error adding new employee: {e}")
+        # Handle the error appropriately
+
+    finally:
+        if 'cursor' in locals() and cursor is not None:
+            cursor.close()
+            
 # employee_id
 def find_employee_id_by_name(connection, employee_name):
     cursor = connection.cursor()
